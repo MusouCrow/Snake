@@ -4,10 +4,12 @@ using UnityEngine;
 namespace Game {
     public class Body : MonoBehaviour {
         private static GameObject PREFAB;
+        private static int COUNT;
 
         private static GameObject NewBody(GameObject pre) {
             var obj = GameObject.Instantiate(PREFAB, pre.transform.position, Quaternion.identity);
             obj.transform.position = pre.transform.position;
+            obj.name = COUNT++.ToString();
             var a = obj.GetComponent<Body>();
             var b = pre.GetComponent<Body>();
 
@@ -23,15 +25,17 @@ namespace Game {
         public Body afterbody;
         public Vector2 laterPosition;
         private bool willNew;
-        
+
         protected void Awake() {
             PREFAB = PREFAB == null ? Resources.Load("Prefab/Body") as GameObject : PREFAB;
            
             System.MoveTickEvent += this.MoveTick;
+            System.MoveTickEvent += this.WhenNewBornTick;
+            Head.TAIL = this;
         }
 
-        protected void Update() {
-            if (this.afterbody == null && Input.GetKeyDown(KeyCode.Space)) {
+        public void Bore() {
+            if (this.afterbody == null) {
                 this.willNew = true;
             }
         }
@@ -48,6 +52,14 @@ namespace Game {
 
             this.laterPosition = this.transform.position;
             this.transform.position = this.prebody.laterPosition;
+        }
+    
+        private void WhenNewBornTick() {
+            if (this.tag == "NewBody") {
+                this.tag = "Body";
+            }
+
+            System.MoveTickEvent -= this.WhenNewBornTick;
         }
     }
 }

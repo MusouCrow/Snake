@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Game {
     public class GridField : MonoBehaviour {
-        private const int ASPECT_W = 15;
-        private const int ASPECT_H = 9;
+        public const int ASPECT_W = 15;
+        public const int ASPECT_H = 9;
 
         private float width;
         private float height;
