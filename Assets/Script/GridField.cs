@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game {
     public class GridField : MonoBehaviour {
-        public const int ASPECT_W = 15;
+        public const int ASPECT_W = 16;
         public const int ASPECT_H = 9;
 
         private float width;
@@ -14,7 +14,7 @@ namespace Game {
         }
 
         protected void OnDrawGizmos() {
-            for (int i = -ASPECT_W; i <= ASPECT_W; i++) {
+            for (int i = -ASPECT_W + 1; i <= ASPECT_W - 1; i++) {
                 Gizmos.DrawLine(new Vector3(i * GridUtility.SIZE, -this.height, 0), new Vector3(i * GridUtility.SIZE, this.height, 0));
             }
             

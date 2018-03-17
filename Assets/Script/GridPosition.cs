@@ -39,19 +39,25 @@ namespace Game {
             this.AdjustPosition();
         }
 
+        protected void Update() {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                this.Position = new Vector2Int(this.x, this.y);
+            }
+        }
+
         private void AdjustPosition() {
-            if (this.x > GridField.ASPECT_W) {
+            if (this.x > GridField.ASPECT_W - 1) {
                 this.x = -GridField.ASPECT_W;
             }
             else if (this.x < -GridField.ASPECT_W) {
-                this.x = GridField.ASPECT_W;
+                this.x = GridField.ASPECT_W - 1;
             }
 
-            if (this.y > GridField.ASPECT_H) {
+            if (this.y > GridField.ASPECT_H - 1) {
                 this.y = -GridField.ASPECT_H;
             }
             else if (this.y < -GridField.ASPECT_H) {
-                this.y = GridField.ASPECT_H;
+                this.y = GridField.ASPECT_H - 1;
             }
 
             this.transform.position = GridUtility.ToPosition(this.x, this.y);

@@ -8,13 +8,13 @@ namespace Game {
         protected void Awake() {
             this.gridPosition = this.GetComponent<GridPosition>();
 
-            int w = (int)Mathf.Lerp(GridField.ASPECT_W, -GridField.ASPECT_W, Random.value);
-            int h = (int)Mathf.Lerp(GridField.ASPECT_H, -GridField.ASPECT_H, Random.value);
+            int w = (int)Mathf.Lerp(GridField.ASPECT_W - 1, -GridField.ASPECT_W + 1, Random.value);
+            int h = (int)Mathf.Lerp(GridField.ASPECT_H - 1, -GridField.ASPECT_H + 1, Random.value);
             this.gridPosition.Position = new Vector2Int(w, h);
         }
 
         protected void OnTriggerEnter2D(Collider2D collider) {
-            Factory.FOOD_COUNT--;
+            Factory.FoodCount--;
             Destroy(this.gameObject);
         }
     }

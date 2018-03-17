@@ -4,12 +4,15 @@ using UnityEngine;
 namespace Game {
     public class Body : MonoBehaviour {
         private static GameObject PREFAB;
-        private static int COUNT;
+        
+        public static int Count {
+            get;
+            private set;
+        }
 
         private static GameObject NewBody(GameObject pre) {
             var obj = GameObject.Instantiate(PREFAB, pre.transform.position, Quaternion.identity);
             obj.transform.position = pre.transform.position;
-            obj.name = COUNT++.ToString();
             var a = obj.GetComponent<Body>();
             var b = pre.GetComponent<Body>();
 
@@ -32,6 +35,13 @@ namespace Game {
             System.MoveTickEvent += this.MoveTick;
             System.MoveTickEvent += this.WhenNewBornTick;
             Head.TAIL = this;
+            Body.Count++;
+        }
+
+        protected void OnDestroy() {
+            System.MoveTickEvent -= this.MoveTick;
+            System.MoveTickEvent -= this.WhenNewBornTick;
+            Body.Count--;
         }
 
         public void Bore() {

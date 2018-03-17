@@ -8,6 +8,8 @@ TagManager:
   - Food
   - Body
   - NewBody
+  - UI
+  - Joystick
   layers:
   - Default
   - TransparentFX

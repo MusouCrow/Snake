@@ -4,7 +4,16 @@ using UnityEngine;
 namespace Game {
     public class Factory : MonoBehaviour {
         private static Factory INSTANCE;
-        public static int FOOD_COUNT;
+
+        public static int FoodCount {
+            get {
+                return INSTANCE.foodCount;
+            }
+            set {
+                INSTANCE.foodCount = value;
+                System.AdjustInterval();
+            }
+        }
         
         [SerializeField]
         private GameObject foodPrefab;
@@ -12,6 +21,8 @@ namespace Game {
         private int min;
         [SerializeField]
         private int max;
+
+        private int foodCount;
 
         protected void Awake() {
             INSTANCE = this;
@@ -22,12 +33,12 @@ namespace Game {
         private void Produce() {
             for (int i = this.min; i < this.max; i++) {
                 var obj = GameObject.Instantiate(INSTANCE.foodPrefab);
-                FOOD_COUNT++;
+                FoodCount++;
             }
         }
 
         private void MoveTick() {
-            if (FOOD_COUNT == 0) {
+            if (FoodCount == 0) {
                 this.Produce();
             }
         }

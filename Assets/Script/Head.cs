@@ -9,7 +9,12 @@ namespace Game {
             left
         }
 
+        private static float DRAG_VALUE = 20;
+
         public static Body TAIL;
+
+        [SerializeField]
+        private Transform joystick;
 
         private Direction direction;
         private GridPosition gridPosition;
@@ -25,18 +30,25 @@ namespace Game {
         protected void Update() {
             for (int i = 0; i < 4; i++) {
                 if (Input.GetKeyDown((KeyCode)(i + KeyCode.UpArrow))) {
-                    var next = (Direction)i;
-                    bool ban1 = next == Direction.down && this.direction == Direction.up;
-                    bool ban2 = next == Direction.up && this.direction == Direction.down;
-                    bool ban3 = next == Direction.left && this.direction == Direction.right;
-                    bool ban4 = next == Direction.right && this.direction == Direction.left;
-
-                    if (!(ban1 || ban2 || ban3 || ban4)) {
-                        this.direction = (Direction)i;
-                    }
-
+                    this.SetDirection((Direction)i);
                     break;
                 }
+            }
+            
+            var x = this.joystick.localPosition.x;
+            var y = this.joystick.localPosition.y;
+
+            if (y >= DRAG_VALUE) {
+                this.SetDirection(Direction.up);
+            }
+            else if (y <= -DRAG_VALUE) {
+                this.SetDirection(Direction.down);
+            }
+            else if (x <= -DRAG_VALUE) {
+                this.SetDirection(Direction.left);
+            }
+            else if (x >= DRAG_VALUE) {
+                this.SetDirection(Direction.right);
             }
         }
 
@@ -45,11 +57,28 @@ namespace Game {
                 TAIL.Bore();
             }
             else if (collider.tag == "Body") {
-                print(collider.name);
-                print("body ," + collider.transform.position.x + "," + collider.transform.position.y);
-                print("head ," + this.transform.position.x + "," + this.transform.position.y);
-                print("Game Over!");
-                System.IS_PAUSED = true;
+                System.IS_OVER = true;
+            }
+        }
+
+        public void Reset() {
+            this.gridPosition.Position = Vector2Int.zero;
+            this.direction = Direction.up;
+            TAIL = this.body;
+        }
+
+        private void SetDirection(Direction next) {
+            if (this.direction == next) {
+                return;
+            }
+
+            bool ban1 = next == Direction.down && this.direction == Direction.up;
+            bool ban2 = next == Direction.up && this.direction == Direction.down;
+            bool ban3 = next == Direction.left && this.direction == Direction.right;
+            bool ban4 = next == Direction.right && this.direction == Direction.left;
+
+            if (!(ban1 || ban2 || ban3 || ban4)) {
+                this.direction = next;
             }
         }
 
