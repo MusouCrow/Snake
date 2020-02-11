@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
  
 namespace Game {
-    public class ScrollCircle :ScrollRect {
+    public class ScrollCircle : ScrollRect {
         protected float mRadius = 0f;
     
         protected override void Start() {

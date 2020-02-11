@@ -9,8 +9,9 @@ function Test.NewGameObject(name)
     return go
 end
 
-function Test:Ctor(value)
+function Test:Ctor(value, go)
     self.value = value
+    print(go.transform)
 end
 
 function Test:Print()

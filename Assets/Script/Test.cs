@@ -10,13 +10,7 @@ namespace Game {
         private LuaTable table;
 
         protected void Awake() {
-            this.state = new LuaState();
-            this.state.Start();
-            LuaBinder.Bind(this.state);
-
-            string path = Application.dataPath + "/Lua";
-            this.state.AddSearchPath(path);
-            this.state.Require("Test");
+            this.state = Lua.NewState("Test");
             
             this.table = this.NewTable(this._value);
             Debug.Log(this.table["value"]);
@@ -36,6 +30,7 @@ namespace Game {
             
             func.BeginPCall();
             func.Push(value);
+            func.Push(this.gameObject);
             func.PCall();
             var table = func.CheckLuaTable();
             func.EndPCall();

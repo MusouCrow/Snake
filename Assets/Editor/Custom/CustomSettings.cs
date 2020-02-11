@@ -45,6 +45,20 @@ public static class CustomSettings
     //在这里添加你要导出注册到lua的类型列表
     public static BindType[] customTypeList =
     {                
+        _GT(typeof(Game.Body)),
+        _GT(typeof(Game.Factory)),
+        _GT(typeof(Game.Food)),
+        _GT(typeof(Game.Gradients)),
+        _GT(typeof(Game.GridField)),
+        _GT(typeof(Game.GridPosition)),
+        _GT(typeof(Game.GridUtility)),
+        _GT(typeof(Game.Head)),
+        _GT(typeof(Game.Restart)),
+        _GT(typeof(Game.System)),
+        _GT(typeof(Game.Test)),
+
+        _GT(typeof(Vector2Int)),
+        
         //------------------------为例子导出--------------------------------
         //_GT(typeof(TestEventListener)),
         //_GT(typeof(TestProtol)),
