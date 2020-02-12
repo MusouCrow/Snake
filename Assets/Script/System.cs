@@ -26,6 +26,9 @@ namespace Game {
         private float timer;
 
         protected void Awake() {
+            Lua.Init();
+            Lua.Require("Main"); // 初始化脚本
+
             INSTANCE = this;
             CANVAS = GameObject.Find("Canvas");
             CANVAS.SetActive(false);
@@ -43,6 +46,10 @@ namespace Game {
                 System.MoveTickEvent();
                 this.timer -= INTERVAL;
             }
+        }
+
+        protected void LateUpdate() {
+            Lua.Update();
         }
 
         protected void OnGUI() {

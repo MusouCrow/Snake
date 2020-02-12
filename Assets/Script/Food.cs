@@ -1,16 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
+using LuaInterface;
 
 namespace Game {
     public class Food : MonoBehaviour {
-        private GridPosition gridPosition;
+        public GridPosition gridPosition;
+
+        private LuaTable table;
+
+        // 创建类对象
+        protected LuaTable NewTable() {
+            var func = Lua.state.GetFunction("Food.New");
+            
+            func.BeginPCall();
+            func.Push(this);
+            func.PCall();
+
+            var table = func.CheckLuaTable();
+            func.EndPCall();
+
+            return table;
+        }
 
         protected void Awake() {
-            this.gridPosition = this.GetComponent<GridPosition>();
-
-            int w = (int)Mathf.Lerp(GridField.ASPECT_W - 1, -GridField.ASPECT_W + 1, Random.value);
-            int h = (int)Mathf.Lerp(GridField.ASPECT_H - 1, -GridField.ASPECT_H + 1, Random.value);
-            this.gridPosition.Position = new Vector2Int(w, h);
+            Lua.Require("Food"); // 导入脚本
+            this.table = this.NewTable(); // 初始化类对象
         }
 
         protected void OnTriggerEnter2D(Collider2D collider) {
