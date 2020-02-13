@@ -28,8 +28,14 @@ namespace Game {
         }
 
         protected void OnTriggerEnter2D(Collider2D collider) {
-            Factory.FoodCount--;
-            Destroy(this.gameObject);
+             var func = Lua.state.GetFunction("Food.OnTriggerEnter2D");
+            
+            func.BeginPCall();
+            func.Push(this);//有没有这句，报错都是一样的
+            func.PCall();
+
+            func.EndPCall();
+            
         }
     }
 }

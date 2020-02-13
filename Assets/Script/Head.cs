@@ -1,3 +1,121 @@
+// using UnityEngine;
+// using LuaInterface;
+
+// namespace Game {
+//     public class Head : MonoBehaviour {
+//         public enum Direction {
+//             up,
+//             down,
+//             right,
+//             left
+//         }
+
+//         private static float DRAG_VALUE = 20;
+
+//         public static Body TAIL;
+
+//         [SerializeField]
+//         private Transform joystick;
+
+//         public Direction direction;
+//         public GridPosition gridPosition;
+//         public  Body body;
+//         private LuaTable table;
+
+//         // 创建类对象
+//         protected LuaTable NewTable() {
+//             var func = Lua.state.GetFunction("Head.New");//Food里面的Ctor就会开始工作
+            
+//             func.BeginPCall();
+//             func.Push(this); //把这个物体传过去，就实现绑定啦
+//             func.PCall();
+
+//             var table = func.CheckLuaTable();
+//             func.EndPCall();
+
+//             return table;
+//         }
+
+//         protected void Awake() {
+//             Lua.Require("Head"); // 导入脚本
+//             this.table = this.NewTable(); // 初始化类对象，相当于这个Food物体将拥有自己的Food.lua了
+
+//             // var func = Lua.state.GetFunction("Head.Awake");
+
+//             // func.BeginPCall();
+//             // func.Push(this); //把这个物体传过去，就实现绑定啦
+//             // func.PCall();
+            
+//             // func.EndPCall();
+
+//             System.MoveTickEvent += this.MoveTick;
+//         }
+
+//          private void MoveTick() {
+//             var func = Lua.state.GetFunction("Head.MoveTick");
+
+//             func.BeginPCall();
+//             func.Push(this); //把这个物体传过去，就实现绑定啦
+//             func.PCall();
+            
+//             func.EndPCall();
+
+//         }
+
+//          protected void Update() {
+//             var func = Lua.state.GetFunction("Head.Update");
+
+//             func.BeginPCall();
+//             func.Push(this); //把这个物体传过去，就实现绑定啦
+//             func.Push(joystick);
+//             func.Push(DRAG_VALUE);
+//             func.PCall();
+            
+//             func.EndPCall();
+// //            
+//              }
+
+//         protected void OnTriggerEnter2D(Collider2D collider) {
+//             var func = Lua.state.GetFunction("Head.OnTriggerEnter2D");
+
+//             func.BeginPCall();
+//             func.Push(this); //把这个物体传过去，就实现绑定啦
+//             func.Push(collider);
+//             func.PCall();
+            
+//             func.EndPCall();
+               
+//              }
+
+//         public void Reset() {
+//          var func = Lua.state.GetFunction("Head.Reset");
+
+//             func.BeginPCall();
+//             func.Push(this); //把这个物体传过去，就实现绑定啦
+//             func.PCall();
+            
+//             func.EndPCall();
+//         }
+
+//         private void SetDirection(Direction next) {
+//             var func = Lua.state.GetFunction("Head.Reset");
+
+//             func.BeginPCall();
+//             func.Push(this); //把这个物体传过去，就实现绑定啦
+//             func.Push(next);
+//             func.PCall();
+            
+//             func.EndPCall();
+           
+//             }
+
+//     }
+// }
+
+        
+//=============================================================
+    
+//原代码
 using UnityEngine;
 
 namespace Game {

@@ -4,6 +4,7 @@ local GameObject = UnityEngine.GameObject
 local Vector2Int = UnityEngine.Vector2Int
 local GridPosition = Game.GridPosition
 local GridField = Game.GridField
+local Factory = Game.Factory
 
 ---@class Food
 Food = require("Lib.Class")()
@@ -25,4 +26,9 @@ function Food:Awake()
 end
 
 function Food:OnTriggerEnter2D(collider)
+    Factory.FoodCount = Factory.FoodCount - 1 
+    print(self)
+    print(self.obj)
+    print(self.obj.gameObject)
+    --GameObject.Destroy(self.obj.gameObject)
 end
