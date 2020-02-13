@@ -11,7 +11,7 @@ Food = require("Lib.Class")()
 
 function Food:Ctor(obj)
     self.obj = obj
-    self:Awake()
+    -- self:Awake()
 end
 
 function Food:Awake()
@@ -27,8 +27,5 @@ end
 
 function Food:OnTriggerEnter2D(collider)
     Factory.FoodCount = Factory.FoodCount - 1 
-    print(self)
-    print(self.obj)
-    print(self.obj.gameObject)
     --GameObject.Destroy(self.obj.gameObject)
 end

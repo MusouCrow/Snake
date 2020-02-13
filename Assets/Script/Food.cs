@@ -25,16 +25,21 @@ namespace Game {
         protected void Awake() {
             Lua.Require("Food"); // 导入脚本
             this.table = this.NewTable(); // 初始化类对象
+
+            var func = Lua.state.GetFunction("Food.Awake");
+            func.Call(this.table);
         }
 
         protected void OnTriggerEnter2D(Collider2D collider) {
-             var func = Lua.state.GetFunction("Food.OnTriggerEnter2D");
+            //  var func = Lua.state.GetFunction("Food.OnTriggerEnter2D");
             
-            func.BeginPCall();
-            func.Push(this);//有没有这句，报错都是一样的
-            func.PCall();
+            // func.BeginPCall();
+            // func.Push(this);//有没有这句，报错都是一样的
+            // func.PCall();
 
-            func.EndPCall();
+            // func.EndPCall();
+            Factory.FoodCount--;
+            Destroy(this.gameObject);
             
         }
     }

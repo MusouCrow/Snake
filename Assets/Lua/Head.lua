@@ -14,16 +14,16 @@ Head = require("Lib.Class")()
 
 function Head:Ctor(obj)
     self.obj = obj
-    obj1 = obj
     self:Awake()
 end
 
 function Head:Awake()
     
-    local obj = self.obj
-    obj.body = obj.gameObject:GetComponent(typeof(Body))
-    obj.gridPosition = obj1.gameObject:GetComponent(typeof(GridPosition))
-    print("Head:Awake")
+    -- local obj = self.obj
+    -- MyHead.body = obj.gameObject:GetComponent(typeof(Body))
+    -- MyHead.gridPosition = obj.gameObject:GetComponent(typeof(GridPosition))
+    -- print("Head:Awake")
+    --因为报错，这里先从C#实现
 end
 
 
@@ -44,7 +44,6 @@ function Head:MoveTick()
 end
 
 function Head:Update(joystick, DRAG_VALUE)
-    local obj = self.obj
 
     if (Input.GetKeyDown(KeyCode.UpArrow)) then
         this:SetDirection(KeyCode.UpArrow)
@@ -78,11 +77,13 @@ function Head:Update(joystick, DRAG_VALUE)
 end
 
 ---！！！昨天就写到这个位置，应该需要给KeyCode 绑定一下，另外没有验证过obj.direction/Direction(private值)，是否行得通
----！！！为什么obj有两个提示
+---小总结，目前从C#传变量用了三个方法，一个是obj.xx，但是obj总是有问题，且xx为public； 
+---第二种是通过函数调用push过来，目前没缺点，就是能实现给变量赋值的功能
+---第三种是Head.xx, 直接取用，也需要为public 
 
-function Head:SetDirection(next)
-    local obj = self.obj
-    if(obj.direction == next) then
+function Head:SetDirection(direction, next)
+    --local obj = self.obj
+    if(direction == next) then
         return 
     end
 
@@ -91,25 +92,26 @@ function Head:SetDirection(next)
     local ban3 = true
     local ban4 = true
     
-    if( not (next == obj.Direction.down and obj.direction == obj.Direction.up ) ) then
+    if( not (next == MyHead.Direction.down and direction == MyHead.Direction.up ) ) then
          ban1 = false
     end
 
-    if( not (next == obj.Direction.up and obj.direction == obj.Direction.down ) ) then
+    if( not (next == MyHead.Direction.up and direction == MyHead.Direction.down ) ) then
         ban2 = false
     end
 
-    if( not (next == obj.Direction.left and obj.direction == obj.Direction.right ) ) then
+    if( not (next == MyHead.Direction.left and direction == MyHead.Direction.right ) ) then
         ban3 = false
     end
 
-    if( not (next == obj.Direction.right and obj.direction == obj.Direction.left ) ) then
+    if( not (next == MyHead.Direction.right and direction == MyHead.Direction.left ) ) then
         ban4 = false
     end
 
     if(not(ban1 or ban2 or ban3 or ban4)) then
-        obj.direction = next
+        direction = next
     end
+    return direction
 end
 
 
@@ -130,20 +132,20 @@ function Head:Reset()
 end
 
 
-function Head:MoveTick(direction)
-    local obj = self.obj
+function Head:MoveTick(gridPosition,direction)
+    --local obj = self.obj
 
     if(direction == MyHead.Direction.up) then
-        obj.gridPosition.Y =  obj.gridPosition.Y + 1
+        gridPosition.Y = gridPosition.Y + 1
 
     elseif (direction == MyHead.Direction.down) then
-        obj.gridPosition.Y =  obj.gridPosition.Y - 1
+        gridPosition.Y =  gridPosition.Y - 1
 
     elseif (direction == MyHead.Direction.left) then
-        obj.gridPosition.X =  obj.gridPosition.X - 1
+        gridPosition.X =  gridPosition.X - 1
 
     elseif (direction == MyHead.Direction.right) then
-        obj.gridPosition.X =  obj.gridPosition.X + 1
+        gridPosition.X =  gridPosition.X + 1
     end
 end
 

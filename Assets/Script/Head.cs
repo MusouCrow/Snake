@@ -47,6 +47,8 @@
 //             // func.PCall();
             
 //             // func.EndPCall();
+//             this.body = this.GetComponent<Body>();
+//             this.gridPosition = this.GetComponent<GridPosition>();
 
 //             System.MoveTickEvent += this.MoveTick;
 //         }
@@ -56,6 +58,9 @@
 
 //             func.BeginPCall();
 //             func.Push(this); //把这个物体传过去，就实现绑定啦
+//             func.Push(gridPosition);
+//             func.Push(direction);
+
 //             func.PCall();
             
 //             func.EndPCall();
@@ -91,7 +96,7 @@
 //          var func = Lua.state.GetFunction("Head.Reset");
 
 //             func.BeginPCall();
-//             func.Push(this); //把这个物体传过去，就实现绑定啦
+//             func.Push(this); 
 //             func.PCall();
             
 //             func.EndPCall();
@@ -101,10 +106,13 @@
 //             var func = Lua.state.GetFunction("Head.Reset");
 
 //             func.BeginPCall();
-//             func.Push(this); //把这个物体传过去，就实现绑定啦
+//             func.Push(this); 
+//             func.Push(direction);
 //             func.Push(next);
 //             func.PCall();
-            
+
+//            // direction = func.chec//这里想尝试用push传入参数，但是返回值为枚举值的时候不知道怎么办，所以解决了obj问题再修改这个函数吧
+
 //             func.EndPCall();
            
 //             }
