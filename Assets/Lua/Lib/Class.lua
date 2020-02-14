@@ -31,7 +31,7 @@ local function _Class(...) -- super list
         local instance = setmetatable({}, {__index = cls})
         instance.class = cls
 		instance:Ctor(...)
-		print("class new", instance, cls)
+		--print("class new", instance, cls)
         return instance
     end    
 

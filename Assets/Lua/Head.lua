@@ -8,82 +8,83 @@ local Body = Game.Body
 local GridPosition = Game.GridPosition
 local System = Game.System
 local MyHead = Game.Head
-local obj1 = nil 
+
 
 Head = require("Lib.Class")()
 
 function Head:Ctor(obj)
     self.obj = obj
-    self:Awake()
+    print(obj)
+    --self:Awake()
 end
 
-function Head:Awake()
-    
-    -- local obj = self.obj
-    -- MyHead.body = obj.gameObject:GetComponent(typeof(Body))
-    -- MyHead.gridPosition = obj.gameObject:GetComponent(typeof(GridPosition))
-    -- print("Head:Awake")
-    --因为报错，这里先从C#实现
+function Head:Awake() 
+    local obj = self.obj
+
+    obj.gridPosition = obj.gameObject:GetComponent(typeof(GridPosition))
+    obj.body = obj.gameObject:GetComponent(typeof(Body))
+
 end
 
 
-function Head:MoveTick()
+function Head:MoveTick(direction, up, down, left, right)
     local obj = self.obj
     obj.body.laterPosition = obj.transform.position
 
-    if (obj.direction == obj.Direction.up) then
+    if (direction == up) then
         obj.gridPosition.Y = obj.gridPosition.Y + 1
-    elseif (obj.direction == obj.Direction.down) then
+    elseif (direction == down) then
         obj.gridPosition.Y = obj.gridPosition.Y - 1
-    elseif (obj.direction == obj.Direction.left)  then
+    elseif (direction == left)  then
         obj.gridPosition.X = obj.gridPosition.X - 1 
-    elseif (obj.direction == obj.Direction.right)  then
+    elseif (direction == right)  then
         obj.gridPosition.X = obj.gridPosition.X + 1 
     end
 
 end
 
-function Head:Update(joystick, DRAG_VALUE)
+function Head:Update(joystick, DRAG_VALUE, up, down, left, right)
+    local obj = self.obj
+    self.up = up
 
     if (Input.GetKeyDown(KeyCode.UpArrow)) then
-        this:SetDirection(KeyCode.UpArrow)
+        self:SetDirection(up, up, down, left, right)
 
     elseif (Input.GetKeyDown(KeyCode.DownArrow)) then
-        this:SetDirection(KeyCode.DownArrow) 
+        self:SetDirection(down, up, down, left, right) 
 
     elseif (Input.GetKeyDown(KeyCode.LeftArrow)) then
-        this:SetDirection(KeyCode.LeftArrow)
+        self:SetDirection(left, up, down, left, right)
 
     elseif (Input.GetKeyDown(KeyCode.RightArrow)) then
-        this:SetDirection(KeyCode.RightArrow) 
+        self:SetDirection(right, up, down, left, right) 
     end
 
     local x = joystick.localPosition.x
     local y = joystick.localPosition.y
 
     if (y >= DRAG_VALUE) then
-        this:SetDirection(MyHead.Direction.up)
+        self:SetDirection(up, up, down, left, right)
 
     elseif (y <= -DRAG_VALUE) then
-        this:SetDirection(MyHead.Direction.down)
+        self:SetDirection(down, up, down, left, right)
 
     elseif (x <= -DRAG_VALUE) then
-        this:SetDirection(MyHead.Direction.left)
+        self:SetDirection(left, up, down, left, right)
 
     elseif (x >= DRAG_VALUE) then
-        this:SetDirection(MyHead.Direction.right)
+        self:SetDirection(right, up, down, left, right)
     end
     
 end
 
----！！！昨天就写到这个位置，应该需要给KeyCode 绑定一下，另外没有验证过obj.direction/Direction(private值)，是否行得通
 ---小总结，目前从C#传变量用了三个方法，一个是obj.xx，但是obj总是有问题，且xx为public； 
 ---第二种是通过函数调用push过来，目前没缺点，就是能实现给变量赋值的功能
 ---第三种是Head.xx, 直接取用，也需要为public 
 
-function Head:SetDirection(direction, next)
-    --local obj = self.obj
-    if(direction == next) then
+function Head:SetDirection(next, up, down, left, right)
+    local obj = self.obj
+    if(obj.direction == next) then
         return 
     end
 
@@ -92,32 +93,34 @@ function Head:SetDirection(direction, next)
     local ban3 = true
     local ban4 = true
     
-    if( not (next == MyHead.Direction.down and direction == MyHead.Direction.up ) ) then
+    if( not (next == down and obj.direction == up ) ) then
          ban1 = false
     end
 
-    if( not (next == MyHead.Direction.up and direction == MyHead.Direction.down ) ) then
+    if( not (next == up and obj.direction == down ) ) then
         ban2 = false
     end
 
-    if( not (next == MyHead.Direction.left and direction == MyHead.Direction.right ) ) then
+    if( not (next == left and obj.direction == right ) ) then
         ban3 = false
     end
 
-    if( not (next == MyHead.Direction.right and direction == MyHead.Direction.left ) ) then
+    if( not (next ==right and obj.direction == left ) ) then
         ban4 = false
     end
 
     if(not(ban1 or ban2 or ban3 or ban4)) then
-        direction = next
+        obj.direction = next
     end
-    return direction
 end
 
 
 function Head:OnTriggerEnter2D(collider)
+    local obj = self.obj
+
     if(collider.tag == "Food") then
-        MyHead.TAIL.Bore()
+       -- print(obj.TAIL)
+        obj.TAIL:Bore() 
     
     elseif(collider.tag == "Body") then
         System.IS_OVER = true
@@ -127,26 +130,10 @@ end
 function Head:Reset()
     local obj = self.obj
     obj.gridPosition.Position = Vector2Int.zero
-    obj.direction = obj.Direction.up
-    MyHead.TAIL = obj.Body ---这里不清楚
+    obj.direction = self.up
+    obj.TAIL = obj.body 
 end
 
 
-function Head:MoveTick(gridPosition,direction)
-    --local obj = self.obj
-
-    if(direction == MyHead.Direction.up) then
-        gridPosition.Y = gridPosition.Y + 1
-
-    elseif (direction == MyHead.Direction.down) then
-        gridPosition.Y =  gridPosition.Y - 1
-
-    elseif (direction == MyHead.Direction.left) then
-        gridPosition.X =  gridPosition.X - 1
-
-    elseif (direction == MyHead.Direction.right) then
-        gridPosition.X =  gridPosition.X + 1
-    end
-end
 
    

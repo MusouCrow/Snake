@@ -10,6 +10,9 @@ public class Game_SystemWrap
 		L.RegFunction("AdjustInterval", AdjustInterval);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("CANVAS", get_CANVAS, set_CANVAS);
+		L.RegVar("INTERVAL", get_INTERVAL, set_INTERVAL);
+		L.RegVar("timer", get_timer, set_timer);
 		L.RegVar("IS_OVER", null, set_IS_OVER);
 		L.RegVar("MoveTickEvent", get_MoveTickEvent, set_MoveTickEvent);
 		L.EndClass();
@@ -21,9 +24,8 @@ public class Game_SystemWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 0);
-			float o = Game.System.AdjustInterval();
-			LuaDLL.lua_pushnumber(L, o);
-			return 1;
+			Game.System.AdjustInterval();
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -50,10 +52,106 @@ public class Game_SystemWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_CANVAS(IntPtr L)
+	{
+		try
+		{
+			ToLua.PushSealed(L, Game.System.CANVAS);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_INTERVAL(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushnumber(L, Game.System.INTERVAL);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_timer(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.System obj = (Game.System)o;
+			float ret = obj.timer;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index timer on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_MoveTickEvent(IntPtr L)
 	{
 		ToLua.Push(L, new EventObject(typeof(System.Action)));
 		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_CANVAS(IntPtr L)
+	{
+		try
+		{
+			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckObject(L, 2, typeof(UnityEngine.GameObject));
+			Game.System.CANVAS = arg0;
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_INTERVAL(IntPtr L)
+	{
+		try
+		{
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			Game.System.INTERVAL = arg0;
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_timer(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.System obj = (Game.System)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.timer = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index timer on a nil value");
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

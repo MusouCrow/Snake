@@ -8,12 +8,16 @@ namespace Game {
 
         private LuaTable table;
 
+        //System system = new System();
+
         public static int FoodCount {
+        
             get {
                 return INSTANCE.foodCount;
             }
             set {
                 INSTANCE.foodCount = value;
+                //Factory.system.AdjustInterval();
                 System.AdjustInterval();
             }
         }
@@ -61,7 +65,7 @@ namespace Game {
             func.Push(FoodCount);
             func.PCall();
 
-            foodCount = (int)func.CheckNumber();
+            Factory.FoodCount = (int)func.CheckNumber();
             func.EndPCall();
         }
         

@@ -10,10 +10,12 @@ public class Game_BodyWrap
 		L.RegFunction("Bore", Bore);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("PREFAB", get_PREFAB, set_PREFAB);
+		L.RegVar("Count", get_Count, set_Count);
 		L.RegVar("prebody", get_prebody, set_prebody);
 		L.RegVar("afterbody", get_afterbody, set_afterbody);
 		L.RegVar("laterPosition", get_laterPosition, set_laterPosition);
-		L.RegVar("Count", get_Count, null);
+		L.RegVar("willNew", get_willNew, set_willNew);
 		L.EndClass();
 	}
 
@@ -43,6 +45,34 @@ public class Game_BodyWrap
 			UnityEngine.Object arg1 = (UnityEngine.Object)ToLua.ToObject(L, 2);
 			bool o = arg0 == arg1;
 			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PREFAB(IntPtr L)
+	{
+		try
+		{
+			ToLua.PushSealed(L, Game.Body.PREFAB);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Count(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushinteger(L, Game.Body.Count);
 			return 1;
 		}
 		catch (Exception e)
@@ -109,12 +139,47 @@ public class Game_BodyWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_Count(IntPtr L)
+	static int get_willNew(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.Body obj = (Game.Body)o;
+			bool ret = obj.willNew;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index willNew on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_PREFAB(IntPtr L)
 	{
 		try
 		{
-			LuaDLL.lua_pushinteger(L, Game.Body.Count);
-			return 1;
+			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckObject(L, 2, typeof(UnityEngine.GameObject));
+			Game.Body.PREFAB = arg0;
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Count(IntPtr L)
+	{
+		try
+		{
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			Game.Body.Count = arg0;
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -176,6 +241,25 @@ public class Game_BodyWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index laterPosition on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_willNew(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.Body obj = (Game.Body)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.willNew = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index willNew on a nil value");
 		}
 	}
 }

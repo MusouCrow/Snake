@@ -11,6 +11,9 @@ public class Game_HeadWrap
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("TAIL", get_TAIL, set_TAIL);
+		L.RegVar("direction", get_direction, set_direction);
+		L.RegVar("gridPosition", get_gridPosition, set_gridPosition);
+		L.RegVar("body", get_body, set_body);
 		L.EndClass();
 	}
 
@@ -63,6 +66,63 @@ public class Game_HeadWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_direction(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.Head obj = (Game.Head)o;
+			Game.Head.Direction ret = obj.direction;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index direction on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_gridPosition(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.Head obj = (Game.Head)o;
+			Game.GridPosition ret = obj.gridPosition;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index gridPosition on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_body(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.Head obj = (Game.Head)o;
+			Game.Body ret = obj.body;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index body on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_TAIL(IntPtr L)
 	{
 		try
@@ -74,6 +134,63 @@ public class Game_HeadWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_direction(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.Head obj = (Game.Head)o;
+			Game.Head.Direction arg0 = (Game.Head.Direction)ToLua.CheckObject(L, 2, typeof(Game.Head.Direction));
+			obj.direction = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index direction on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_gridPosition(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.Head obj = (Game.Head)o;
+			Game.GridPosition arg0 = (Game.GridPosition)ToLua.CheckObject<Game.GridPosition>(L, 2);
+			obj.gridPosition = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index gridPosition on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_body(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.Head obj = (Game.Head)o;
+			Game.Body arg0 = (Game.Body)ToLua.CheckObject<Game.Body>(L, 2);
+			obj.body = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index body on a nil value");
 		}
 	}
 }

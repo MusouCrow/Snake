@@ -9,6 +9,8 @@ public class Game_GridPositionWrap
 		L.BeginClass(typeof(Game.GridPosition), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("x", get_x, set_x);
+		L.RegVar("y", get_y, set_y);
 		L.RegVar("X", get_X, set_X);
 		L.RegVar("Y", get_Y, set_Y);
 		L.RegVar("Position", null, set_Position);
@@ -30,6 +32,44 @@ public class Game_GridPositionWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_x(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.GridPosition obj = (Game.GridPosition)o;
+			int ret = obj.x;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index x on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_y(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.GridPosition obj = (Game.GridPosition)o;
+			int ret = obj.y;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index y on a nil value");
 		}
 	}
 
@@ -68,6 +108,44 @@ public class Game_GridPositionWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Y on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_x(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.GridPosition obj = (Game.GridPosition)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.x = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index x on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_y(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.GridPosition obj = (Game.GridPosition)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.y = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index y on a nil value");
 		}
 	}
 

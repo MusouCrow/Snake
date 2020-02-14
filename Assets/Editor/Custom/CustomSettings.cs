@@ -29,6 +29,8 @@ public static class CustomSettings
         typeof(UnityEngine.QualitySettings),
         typeof(UnityEngine.GL),
         typeof(UnityEngine.Graphics),
+        typeof(Game.GridUtility),
+      
     };
 
     //附加导出委托类型(在导出委托时, customTypeList 中牵扯的委托类型都会导出， 无需写在这里)
@@ -40,6 +42,7 @@ public static class CustomSettings
         _DT(typeof(System.Action<int>)),
         _DT(typeof(System.Comparison<int>)),
         _DT(typeof(System.Func<int, int>)),
+
     };
 
     //在这里添加你要导出注册到lua的类型列表
@@ -57,6 +60,11 @@ public static class CustomSettings
         _GT(typeof(Game.System)),
 
         _GT(typeof(Vector2Int)),
+        _GT(typeof(Vector3)),
+        _GT(typeof(UnityEngine.UI.Button)),
+        _GT(typeof(UnityEngine.UI.Graphic)),
+       
+    
 
         //------------------------为例子导出--------------------------------
         //_GT(typeof(TestEventListener)),

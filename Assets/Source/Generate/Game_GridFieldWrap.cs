@@ -11,6 +11,8 @@ public class Game_GridFieldWrap
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegConstant("ASPECT_W", 16);
 		L.RegConstant("ASPECT_H", 9);
+		L.RegVar("width", get_width, set_width);
+		L.RegVar("height", get_height, set_height);
 		L.EndClass();
 	}
 
@@ -29,6 +31,82 @@ public class Game_GridFieldWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_width(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.GridField obj = (Game.GridField)o;
+			float ret = obj.width;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index width on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_height(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.GridField obj = (Game.GridField)o;
+			float ret = obj.height;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index height on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_width(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.GridField obj = (Game.GridField)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.width = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index width on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_height(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Game.GridField obj = (Game.GridField)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.height = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index height on a nil value");
 		}
 	}
 }
