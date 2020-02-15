@@ -1,12 +1,12 @@
 
 local GameObject = UnityEngine.GameObject
 local Vector2Int = UnityEngine.Vector2Int
---local Button = UnityEngine--这里绑定之后还是不行~，因为没有提示
+local Button = UnityEngine.UI.Button--这里绑定之后还是不行~，因为没有提示
 local Gradients = Game.Gradients
 local System = Game.System
 local Head = Game.Head
 local Factory = Game.Factory
-
+local MyRestart = Game.Restart
 
 ---@class Restart
 Restart = require("Lib.Class")()
@@ -21,7 +21,8 @@ function Restart:Awake()
     
    
 
-    --obj.button = GameObject.Find("Button")
+    obj.button = obj.gameObject:GetComponent(typeof(Button))
+    obj.button.onClick.AddListener(MyRestart.OnClick)
     -- print(obj.button)
     -- print("==========================")
     -- obj.button:onClick.AddListener(Restart.OnClick) -- 这里没有解决在lua里面给button加listener的问题

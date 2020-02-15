@@ -69,6 +69,8 @@ namespace Game {
 
             if(ready)
             System.MoveTickEvent();
+
+            AdjustInterval();
         }
 
         protected void LateUpdate() {

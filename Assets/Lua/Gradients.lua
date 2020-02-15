@@ -1,6 +1,6 @@
 
         local GameObject = UnityEngine.GameObject
-        local Graphic = UnityEngine.Graphics
+        local Graphic = UnityEngine.UI.Graphic 
         local Time = UnityEngine.Time
         local Color = UnityEngine.Color
         local GridPosition = Game.GridPosition
@@ -38,6 +38,7 @@
                 obj.enabled = false--这里可能有问题
                 print("disable")
             end
+
         end
 
       

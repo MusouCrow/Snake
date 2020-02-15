@@ -121,6 +121,7 @@ function Head:OnTriggerEnter2D(collider)
     if(collider.tag == "Food") then
        -- print(obj.TAIL)
         obj.TAIL:Bore() 
+        System.AdjustInterval()
     
     elseif(collider.tag == "Body") then
         System.IS_OVER = true

@@ -18,7 +18,7 @@ namespace Game {
             set {
                 INSTANCE.foodCount = value;
                 //Factory.system.AdjustInterval();
-                System.AdjustInterval();
+                //System.AdjustInterval();
             }
         }
         

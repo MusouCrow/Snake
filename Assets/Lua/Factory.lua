@@ -1,4 +1,5 @@
 local GameObject = UnityEngine.GameObject
+local System = Game.System
 
 ---@class Factory
 Factory = require("Lib.Class")()

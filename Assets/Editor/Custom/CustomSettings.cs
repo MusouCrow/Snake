@@ -63,6 +63,8 @@ public static class CustomSettings
         _GT(typeof(Vector3)),
         _GT(typeof(UnityEngine.UI.Button)),
         _GT(typeof(UnityEngine.UI.Graphic)),
+        _GT(typeof(UnityEngine.RuntimePlatform)),
+        //_GT(typeof(UnityEngine.Camera)),
        
     
 

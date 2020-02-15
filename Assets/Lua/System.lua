@@ -1,7 +1,10 @@
 local GameObject = UnityEngine.GameObject
+local RuntimePlatform = UnityEngine.RuntimePlatform
 local Time = UnityEngine.Time
 local Body = Game.Body
 local GameSystem = Game.System
+local Application = UnityEngine.Application
+
 
 ---@class System
 System = require("Lib.Class")()
@@ -19,6 +22,11 @@ function System:Awake()
 
     GameSystem.CANVAS = GameObject.Find("Canvas") 
     GameSystem.CANVAS:SetActive(false)
+
+    if(Application.platform ~= RuntimePlatform.Android) then 
+        local canvas2 = GameObject.Find("Canvas2")
+        canvas2:SetActive(false)
+    end
 end
 
 function System:Update()

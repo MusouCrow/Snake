@@ -25,6 +25,7 @@ public static class LuaBinder
 		L.EndModule();
 		L.BeginModule("UnityEngine");
 		UnityEngine_Vector2IntWrap.Register(L);
+		UnityEngine_RuntimePlatformWrap.Register(L);
 		UnityEngine_ComponentWrap.Register(L);
 		UnityEngine_TransformWrap.Register(L);
 		UnityEngine_MaterialWrap.Register(L);
